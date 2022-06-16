@@ -65,6 +65,16 @@
     "@babel/helper-validator-identifier" "^7.16.7"
     to-fast-properties "^2.0.0"
 
+"@coreui/coreui@^4.1.6":
+  version "4.1.6"
+  resolved "https://registry.yarnpkg.com/@coreui/coreui/-/coreui-4.1.6.tgz#30302468b72da3274811f77dc77c5fd6db35d294"
+  integrity sha512-D+pXPTTWHGuNUaGTa+/KgCjGRH9vvdKKGKcYeE7PVwUwHg6xDgCS6TrPRWth76ELzayov6jiSBZ7ROzLkR/PDA==
+
+"@coreui/react@^4.2.2":
+  version "4.2.2"
+  resolved "https://registry.yarnpkg.com/@coreui/react/-/react-4.2.2.tgz#3e042c17ba3eafbfbd5d9b26ffb385be3991d250"
+  integrity sha512-9omQh1nei5UOoKsCvJYztwCuOpkCquQ4dAE5lSt/3TE6ZQea1D3CmecI5T9DOlTdY28JsOzFs/PBzEdkCt0J5A==
+
 "@emotion/babel-plugin@11.9.2", "@emotion/babel-plugin@^11.7.1":
   version "11.9.2"
   resolved "https://registry.yarnpkg.com/@emotion/babel-plugin/-/babel-plugin-11.9.2.tgz#723b6d394c89fb2ef782229d92ba95a740576e95"
