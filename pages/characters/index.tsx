@@ -86,8 +86,8 @@ const CharacterPage: NextPage = () => {
         {content ? (
           shadowedChunk(content, 5).map((group, groupIndex) => (
             <CRow className="g-3 mb-3" key={groupIndex}>
-              {group.map((character) => (
-                <CCol key={character.id} xs={6} md={4} lg>
+              {group.map((character, characterIndex) => (
+                <CCol key={characterIndex} xs={6} md={4} lg>
                   {character && (
                     <Link href={"/characters/" + character.id}>
                       <a>
