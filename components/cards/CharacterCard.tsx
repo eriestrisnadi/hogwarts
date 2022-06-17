@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "@emotion/styled";
 
 export interface Wand {
@@ -8,7 +8,7 @@ export interface Wand {
 }
 
 export interface CharacterModel {
-  id: number,
+  id: number;
   name: string;
   alternate_names: any[];
   species: string;
@@ -108,6 +108,10 @@ const CharacterCard: React.FC<
   }
 > = ({ name, species, gender, poster, active }) => {
   const [sourcePoster, setSourcePoster] = useState(poster);
+
+  useEffect(() => {
+    setSourcePoster(poster);
+  }, [poster]);
 
   return (
     <>
