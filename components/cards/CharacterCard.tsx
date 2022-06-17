@@ -1,12 +1,33 @@
 import React, { useState } from "react";
 import styled from "@emotion/styled";
 
+export interface Wand {
+  wood: string;
+  core: string;
+  length: number;
+}
+
 export interface CharacterModel {
-  name?: string;
-  species?: string;
-  gender?: string;
-  poster?: string;
-  active?: boolean;
+  id: number,
+  name: string;
+  alternate_names: any[];
+  species: string;
+  gender: string;
+  house: string;
+  dateOfBirth: string;
+  yearOfBirth: number;
+  wizard: boolean;
+  ancestry: string;
+  eyeColour: string;
+  hairColour: string;
+  wand: Wand;
+  patronus: string;
+  hogwartsStudent: boolean;
+  hogwartsStaff: boolean;
+  actor: string;
+  alternate_actors: any[];
+  alive: boolean;
+  image: string;
 }
 
 const cardPositionMap = {
@@ -25,7 +46,7 @@ const cardPositionMap = {
 };
 
 const Card = styled("div")(() => ({
-  backgroundColor: "#fff",
+  backgroundColor: "#ddd",
   boxShadow: "0px 0px 25px rgba(0, 0, 0, 0.1)",
   backgroundPosition: "center",
   overflow: "hidden",
@@ -80,13 +101,12 @@ const Card = styled("div")(() => ({
   },
 }));
 
-const CharacterCard: React.FC<CharacterModel> = ({
-  name,
-  species,
-  gender,
-  poster,
-  active,
-}) => {
+const CharacterCard: React.FC<
+  Partial<Pick<CharacterModel, "name" | "gender" | "species">> & {
+    active?: boolean;
+    poster?: string;
+  }
+> = ({ name, species, gender, poster, active }) => {
   const [sourcePoster, setSourcePoster] = useState(poster);
 
   return (
