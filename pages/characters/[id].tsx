@@ -1,7 +1,6 @@
 import { CCard, CCardBody, CCol, CContainer, CRow } from "@coreui/react";
 import AccessDenied from "components/AccessDenied";
 import CharacterCard, { CharacterModel } from "components/cards/CharacterCard";
-import Error from "next/error";
 import type { NextPage } from "next";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";

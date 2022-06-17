@@ -14,13 +14,19 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     });
   }
 
-  const { page, size } = req.query;
+  const { page, size, term } = req.query;
   const source = await (
     await fetch("http://hp-api.herokuapp.com/api/characters")
   ).json();
-  const characters = (isArray(source) ? source : []).map(
-    (_: any, id: number) => ({ ..._, id: id + 1 })
-  );
+  const characters = (isArray(source) ? source : [])
+    .map((_: any, id: number) => ({ ..._, id: id + 1 }))
+    // Search by name
+    .filter(
+      ({ name }: { name: string }) =>
+        String(name || "")
+          .toLowerCase()
+          .indexOf(String(term || "").toLowerCase()) > -1
+    );
   const pagination = paginate(
     characters.length,
     !isNaN(+page) ? +page : undefined,
@@ -28,7 +34,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   );
   const results = chunk(characters, pagination.pageSize)[
     pagination.currentPage - 1
-  ];
+  ] || [];
 
   return res.send({
     results,

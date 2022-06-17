@@ -13,13 +13,15 @@ import { shadowedChunk } from "utils/shadowedChunk";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
 import AccessDenied from "components/AccessDenied";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 const CharacterPage: NextPage = () => {
   const { data: session, status } = useSession();
   const [content, setContent] = useState<CharacterModel[]>();
   const [page, setPage] = useState(1);
   const [pagination, setPagination] = useState<Record<string, any>>();
+  const [term, setTerm] = useState("");
+  const [sort, setSort] = useState("ascending");
   const loading = status === "loading";
 
   const isCanGoToPrevious = () => {
@@ -49,6 +51,8 @@ const CharacterPage: NextPage = () => {
   const fetchData = async () => {
     const params = new URLSearchParams({
       page: String(page),
+      sort,
+      ...(!!term ? { term } : {}),
     }).toString();
     const res = await fetch(`/api/characters?${params}`);
     const json = await res.json();
@@ -65,7 +69,7 @@ const CharacterPage: NextPage = () => {
     if (!session) return;
 
     fetchData();
-  }, [session, page]);
+  }, [session, page, term]);
 
   if (!session) return <AccessDenied />;
 
@@ -76,7 +80,7 @@ const CharacterPage: NextPage = () => {
         <p className="text-center">Find your favorite character</p>
 
         <div className="mb-3">
-          <FilterForm />
+          <FilterForm onSearch={(e) => setTerm(e.target.value)} />
         </div>
 
         {content ? (
@@ -107,7 +111,7 @@ const CharacterPage: NextPage = () => {
         {pagination && (
           <CPagination
             aria-label="Page navigation characters"
-            className="justify-content-end"
+            className="justify-content-center justify-content-md-end"
           >
             <CPaginationItem
               disabled={!isCanGoToPrevious()}
@@ -122,11 +126,17 @@ const CharacterPage: NextPage = () => {
                 disabled={isPageSameAsCurrent(p)}
                 onClick={() => setPage(p)}
                 style={{ cursor: "pointer" }}
+                className="d-none d-md-block"
               >
                 {p}
               </CPaginationItem>
             ))}
-            <li className="page-item">
+            <li
+              className={[
+                "page-item",
+                ...(pagination.totalPages > 0 ? [] : ["d-none"]),
+              ].join(" ")}
+            >
               <CFormSelect
                 aria-label="Select page"
                 value={page}
@@ -135,7 +145,9 @@ const CharacterPage: NextPage = () => {
                 }
               >
                 {Array.from({ length: pagination.totalPages }, (_, i) => (
-                  <option value={i + 1}>{i + 1}</option>
+                  <option key={i} value={i + 1}>
+                    {i + 1}
+                  </option>
                 ))}
               </CFormSelect>
             </li>
