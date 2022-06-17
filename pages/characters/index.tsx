@@ -23,7 +23,7 @@ const CharacterPage: NextPage = () => {
   const loading = status === "loading";
 
   const isCanGoToPrevious = () => {
-    return (pagination?.page || 1) > 1;
+    return (pagination?.currentPage || 1) > 1;
   };
 
   const isCanGoToNext = () => {
@@ -32,6 +32,18 @@ const CharacterPage: NextPage = () => {
 
   const isPageSameAsCurrent = (page: number) => {
     return page === (pagination?.currentPage || 1);
+  };
+
+  const nextPage = () => {
+    if (!isCanGoToNext()) return;
+
+    setPage((pagination?.currentPage || 1) + 1);
+  };
+
+  const previousPage = () => {
+    if (!isCanGoToPrevious()) return;
+
+    setPage((pagination?.currentPage || 1) - 1);
   };
 
   const fetchData = async () => {
@@ -100,6 +112,7 @@ const CharacterPage: NextPage = () => {
             <CPaginationItem
               disabled={!isCanGoToPrevious()}
               style={{ cursor: "pointer" }}
+              onClick={previousPage}
             >
               Previous
             </CPaginationItem>
@@ -129,6 +142,7 @@ const CharacterPage: NextPage = () => {
             <CPaginationItem
               disabled={!isCanGoToNext()}
               style={{ cursor: "pointer" }}
+              onClick={nextPage}
             >
               Next
             </CPaginationItem>
