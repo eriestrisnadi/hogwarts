@@ -1,6 +1,8 @@
 import { CCard, CCardBody, CCol, CContainer, CRow } from "@coreui/react";
+import AccessDenied from "components/AccessDenied";
 import CharacterCard from "components/cards/CharacterCard";
 import type { NextPage } from "next";
+import { useSession } from "next-auth/react";
 import React from "react";
 import { humanizeBoolean } from "utils/humanizeBoolean";
 
@@ -21,6 +23,8 @@ const Fieldset: React.FC<{
 );
 
 const CharacterDetailPage: NextPage = () => {
+  const { data: session } = useSession();
+
   const dump = {
     name: "Marcus Belby",
     alternate_names: [],
@@ -46,6 +50,8 @@ const CharacterDetailPage: NextPage = () => {
     alive: true,
     image: "",
   };
+
+  if (!session) return <AccessDenied />;
 
   return (
     <>

@@ -4,8 +4,12 @@ import CharacterCard from "components/cards/CharacterCard";
 import FilterForm from "components/form/FilterForm";
 import { shadowedChunk } from "utils/shadowedChunk";
 import Link from "next/link";
+import { useSession } from "next-auth/react";
+import AccessDenied from "components/AccessDenied";
 
 const CharacterPage: NextPage = () => {
+  const { data: session } = useSession();
+
   const dumps = shadowedChunk(
     new Array(7).fill({
       name: "Harry Potter",
@@ -15,6 +19,8 @@ const CharacterPage: NextPage = () => {
     }),
     5
   );
+
+  if (!session) return <AccessDenied />;
 
   return (
     <>

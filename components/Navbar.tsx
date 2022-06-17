@@ -9,11 +9,13 @@ import {
   CNavLink,
   CButton,
 } from "@coreui/react";
+import { useSession, signOut } from "next-auth/react";
 import Link from "next/link";
 import React, { useState } from "react";
 
 const Navbar: React.FC = () => {
   const [visible, setVisible] = useState(false);
+  const { data: session } = useSession();
 
   return (
     <>
@@ -35,9 +37,20 @@ const Navbar: React.FC = () => {
                 </Link>
               </CNavItem>
             </CNavbarNav>
-            <CButton className="d-flex" type="submit" variant="outline">
-              Sign In
-            </CButton>
+            {!session ? (
+              <Link href="/">
+                <a className="btn btn-outline-primary d-flex">Sign In</a>
+              </Link>
+            ) : (
+              <CButton
+                className="d-flex"
+                type="button"
+                variant="outline"
+                onClick={() => signOut()}
+              >
+                Sign Out
+              </CButton>
+            )}
           </CCollapse>
         </CContainer>
       </CNavbar>
