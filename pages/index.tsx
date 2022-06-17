@@ -15,7 +15,7 @@ const HomePage: NextPage = () => {
         <p className="text-center">
           {session ? (
             <>
-              Let's explore now, you may look in to{" "}
+              {"Let's explore now, you may look in to "}
               <Link href="/characters">
                 <a>Characters</a>
               </Link>
